@@ -1,6 +1,6 @@
 #! /usr/bin/perl -Tw
 # smutx (simply marked up text --> something else)
-# (c) 2002-2007 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2007 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 require 5.8.4;
@@ -15,7 +15,7 @@ use File::Basename;
 use lib ".";
 use RRT::Misc;
 
-use vars qw($Root $Page $BaseUrl $Output);
+use vars qw($Root $Page $ServerUrl $BaseUrl $Output);
 
 
 # Rendering
@@ -98,8 +98,8 @@ sub render {
       s/(?<!\pL)\*(?=\S)(.*?)\*(?!\pL)/$$Output{bold}($1)/ge; # strong
       s/(?<!\pL)@(?=\S)(.*?)@(?!\pL)/$$Output{typewriter}($1)/ge; # typewriter
       s/\[(http:\S*(?:(?i)gif|jpg|jpeg|png|bmp))(?:\|(.*?))?\]/$$Output{image}($1, $2)/ge; # external image
-      s/(^|\s)((?:http|ftp):[\S]+[^\s\.,!\?;:])/$1 . $$Output{hyperlink}($2)/ge; # bare URL
-      s/\[((?:http|ftp):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
+      s/(^|\s)((?:http|ftp|mailto):[\S]+[^\s\.,!\?;:])/$1 . $$Output{hyperlink}($2)/ge; # bare URL
+      s/\[((?:http|ftp|mailto):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
       s/\[([^]]+\.(?:(?i)gif|jpg|jpeg|png|bmp))(?:\|(.*?))?\]/$$Output{image}($1, $2)/ge; # internal image
       s/\[(.*?)(?:\|(.*?))?\]/$$Output{hyperlink}(url($1), $2 ? $2 : $1)/ge; # internal link
       # FIXME: In next line, don't assume HTML escapes
@@ -124,9 +124,9 @@ sub render {
 
 sub smutx {
   my $text;
-  ($text, $Output, $Page, $BaseUrl, $Root) = @_;
+  ($text, $Output, $Page, $ServerUrl, $BaseUrl, $Root) = @_;
   chomp $text;
-  return $$Output{preamble}() .  render($text) . $$Output{postamble}();
+  return $$Output{preamble}() . render($text) . $$Output{postamble}();
 }
 
 
