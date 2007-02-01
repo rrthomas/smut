@@ -16,7 +16,7 @@ use lib ".";
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page $BaseUrl);
+use vars qw($Page $ServerUrl $BaseUrl);
 
 
 # FIXME: Why is this needed here and in Smutx.pm? (Otherwise images don't work)
@@ -24,7 +24,7 @@ sub url {
   my ($path) = @_;
   $path = normalizePath($path, $Page);
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
-  return $BaseUrl . $path;
+  return $ServerUrl . $BaseUrl . $path;
 }
 
 my %output =
@@ -62,7 +62,7 @@ my %output =
    notinpara => sub {0},
 
    preamble => sub {""},
-   postamble => sub {""},
+   postamble => sub {"\n"},
 
    image => sub {
      my ($image, $alt, $width, $height) = @_;
@@ -87,11 +87,11 @@ my %output =
 
 # Render text
 my ($file, $root);
-($file, $Page, $BaseUrl, $root) = @ARGV;
+($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
 $file = decode_utf8($file);
 my $text = readText($file) || "";
 $Page = decode_utf8($Page);
 $BaseUrl = decode_utf8($BaseUrl);
 $root = decode_utf8($root);
 binmode(STDOUT, ":utf8");
-print Smutx::smumtx($text, \%output, $Page, $BaseUrl, $root);
+print Smutx::smutx($text, \%output, $Page, $ServerUrl, $BaseUrl, $root);
