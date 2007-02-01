@@ -16,7 +16,7 @@ use lib ".";
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page $BaseUrl);
+use vars qw($Page $ServerUrl $BaseUrl);
 
 
 # FIXME: Why is this needed here and in Smutx.pm? (Otherwise images don't work)
@@ -106,11 +106,11 @@ EOF
 
 # Render text
 my ($file, $root);
-($file, $Page, $BaseUrl, $root) = @ARGV;
+($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
 $file = decode_utf8($file);
 my $text = readText($file) || "";
 $Page = decode_utf8($Page);
 $BaseUrl = decode_utf8($BaseUrl);
 $root = decode_utf8($root);
 binmode(STDOUT, ":utf8");
-print Smutx::smutx($text, \%output, $Page, $BaseUrl, $root);
+print Smutx::smutx($text, \%output, $Page, $ServerUrl, $BaseUrl, $root);
