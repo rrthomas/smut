@@ -94,9 +94,9 @@ sub render {
     if (/^$/) {                 # paragraph
       $result .= flushNest(\@list);
     } else {
-      s/(?<!\pL)_(?=\S)(.*?)_(?!\pL)/$$Output{emphasis}($1)/ge; # emphasis
-      s/(?<!\pL)\*(?=\S)(.*?)\*(?!\pL)/$$Output{bold}($1)/ge; # strong
-      s/(?<!\pL)@(?=\S)(.*?)@(?!\pL)/$$Output{typewriter}($1)/ge; # typewriter
+      s/(?<!\p{IsAlnum})_(?=\S)(.*?)_(?!\p{IsAlnum})/$$Output{emphasis}($1)/ge; # emphasis
+      s/(?<!\p{IsAlnum})\*(?=\S)(.*?)\*(?!\p{IsAlnum})/$$Output{bold}($1)/ge; # strong
+      s/(?<!\p{IsAlnum})@(?=\S)(.*?)@(?!\p{IsAlnum})/$$Output{typewriter}($1)/ge; # typewriter
       s/\[(http:\S*(?:(?i)gif|jpg|jpeg|png|bmp))(?:\|(.*?))?\]/$$Output{image}($1, $2)/ge; # external image
       s/(^|\s)((?:http|ftp|mailto):[\S]+[^\s\.,!\?;:])/$1 . $$Output{hyperlink}($2)/ge; # bare URL
       s/\[((?:http|ftp|mailto):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
