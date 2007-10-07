@@ -8,8 +8,9 @@ require 5.8.4;
 use strict;
 use warnings;
 
+use Perl6::Slurp;
+
 use lib ".";
-use RRT::Misc;
 use Smutx;
 
 
@@ -94,4 +95,4 @@ EOF
 # Render text
 my ($file, $page, $baseurl, $root) = @ARGV;
 binmode(STDOUT, ":utf8");
-print Smutx::smutx(readText($file), \%output, $page, $baseurl, $root);
+print Smutx::smutx(scalar(slurp '<:utf8', $file), \%output, $page, $baseurl, $root);

@@ -10,8 +10,9 @@ require 5.8.4;
 use strict;
 use warnings;
 
+use Perl6::Slurp;
+
 use lib ".";
-use RRT::Misc;
 use Smutx;
 
 
@@ -96,4 +97,4 @@ $page = decode_utf8($page);
 $baseurl = decode_utf8($baseurl);
 $root = decode_utf8($root);
 binmode(STDOUT, ":utf8");
-print Smutx::smutx(readText($file), \%output, $page, $baseurl, $root);
+print Smutx::smutx(scalar(slurp '<:utf8', $file), \%output, $page, $baseurl, $root);

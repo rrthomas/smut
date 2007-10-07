@@ -9,6 +9,7 @@ use utf8;
 use strict;
 use warnings;
 
+use Perl6::Slurp;
 use CGI qw(:standard unescapeHTML);
 use Encode;
 
@@ -108,7 +109,7 @@ EOF
 my ($file, $root);
 ($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
 $file = decode_utf8($file);
-my $text = readText($file) || "";
+my $text = slurp '<:utf8', $file || "";
 $Page = decode_utf8($Page);
 $BaseUrl = decode_utf8($BaseUrl);
 $root = decode_utf8($root);
