@@ -3,6 +3,9 @@
 # (c) 2002-2007 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
+# FIXME: Common ending of all smut-foo.pl scripts should be put in a
+# function
+
 require 5.8.4;
 package Smutx;
 
@@ -24,6 +27,7 @@ sub url {
   my ($path) = @_;
   $path = normalizePath($path, $Page);
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
+  $path =~ s/\$/%24/;     # escape $ to avoid generating macros
   return $BaseUrl . $path;
 }
 

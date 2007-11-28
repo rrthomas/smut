@@ -97,4 +97,4 @@ $page = decode_utf8($page);
 $baseurl = decode_utf8($baseurl);
 $root = decode_utf8($root);
 binmode(STDOUT, ":utf8");
-print Smutx::smutx(scalar(slurp '<:utf8', $file), \%output, $page, $baseurl, $root);
+print Smutx::smutx(scalar(slurp '<:crlf:utf8', $file), \%output, $page, $baseurl, $root);

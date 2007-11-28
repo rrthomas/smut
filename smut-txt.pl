@@ -25,6 +25,7 @@ sub url {
   my ($path) = @_;
   $path = normalizePath($path, $Page);
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
+  $path =~ s/\$/%24/;     # escape $ to avoid generating macros
   return $ServerUrl . $BaseUrl . $path;
 }
 
@@ -90,7 +91,7 @@ my %output =
 my ($file, $root);
 ($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
 $file = decode_utf8($file);
-my $text = slurp '<:utf8', $file || "";
+my $text = slurp '<:crlf:utf8', $file || "";
 $Page = decode_utf8($Page);
 $BaseUrl = decode_utf8($BaseUrl);
 $root = decode_utf8($root);
