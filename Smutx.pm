@@ -74,7 +74,7 @@ sub addItem {
     ($prefix || "") . $opensubitem;
 }
 
-# FIXME: rewrite parser properly:
+# FIXME: rewrite parser properly (Parse::RecDescent?):
 #   Softwrap the input if it needs it
 #   Two routines, render (blocks) and renderPara (lines)
 #   Former calls latter (and latter may recurse)
@@ -115,14 +115,14 @@ sub render {
     }
     $result .= $$Output{openpara}() if $inPara == 1 && $oldInPara == 0;
     $result .= $$Output{linebreak}() if $inPara == 1 && $oldInPara == 1;
-    $result .= $_;
+    $result .= "\n$_";
     $result .= $$Output{closepara}() if $inPara == 0 && $oldInPara == 1;
     $oldInPara = $inPara;
   }
   $result .= flushNest(\@list);
   $result .= flushNest(\@section);
   # Put the next rule last so as not to mess up lists
-  $text =~ s/^([ \t]+)/$$Output{leadingspace}(length $1)/gme; # leading spaces
+  $result =~ s/^([ \t]+)/$$Output{leadingspace}(length $1)/gme; # leading spaces
   return $result;
 }
 

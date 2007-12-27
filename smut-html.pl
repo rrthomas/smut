@@ -61,7 +61,7 @@ my %output =
 
    openpara => sub {"<p>"},
    closepara => sub {"</p>"},
-   linebreak => sub {"<br />\n"},
+   linebreak => sub {"<br />"},
 
    notinpara => sub {$_[0] =~ m/^<h/},
 
