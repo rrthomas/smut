@@ -1,6 +1,6 @@
 #! /usr/bin/perl -Tw
 # smut-txt (simply marked up text --> plain text)
-# (c) 2002-2007 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 require 5.8.4;
@@ -35,27 +35,28 @@ my %output =
    bold => sub {"*" . $_[0] . "*"},
    typewriter => sub {"`" . $_[0] . "'"},
 
+   # FIXME: Need spurious spaces because input is split after titles have been marked up
    sectlevel1 => sub {""},
-   sect1title => sub {uc($_[0]) . "\n" . ("=" x length $_[0])},
+   sect1title => sub {"\n \n" . uc($_[0]) . "\n" . ("=" x length $_[0]) . " \n "},
    sectlevel2 => sub {""},
-   sect2title => sub {$_[0] . "\n" . ("=" x length $_[0])},
+   sect2title => sub {"\n \n" . $_[0] . "\n" . ("=" x length $_[0]) . " \n "},
    sectlevel3 => sub {""},
-   sect3title => sub {$_[0] . "\n" . ("-" x length $_[0])},
+   sect3title => sub {"\n \n" . $_[0] . "\n" . ("-" x length $_[0]) . " \n "},
    sectlevel4 => sub {""},
-   sect4title => sub {$_[0]},
+   sect4title => sub {"\n \n" . $_[0] . " \n "},
    leadingspace => sub {" " x $_[0]},
 
    descriptionlist => sub {""},
    opendescriptionlistitem => sub {""},
-   closedescriptionlistitem => sub {""},
+   closedescriptionlistitem => sub {"\n"},
    describeditem => sub {$_[0] . "\n"},
    itemizedlist => sub {""},
    openitemizedlistitem => sub {"* "},
-   closeitemizedlistitem => sub {""},
+   closeitemizedlistitem => sub {"\n"},
    orderedlist => sub {""},
    # FIXME: Make numbered items
    openorderedlistitem => sub {"* "},
-   closeorderedlistitem => sub {""},
+   closeorderedlistitem => sub {"\n"},
 
    openpara => sub {""},
    closepara => sub {"\n"},
