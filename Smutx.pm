@@ -64,7 +64,6 @@ sub nest {
 sub flushNest {
   my ($list) = @_;
   my $flush = nest($list, 0, "", "", "", 0); # flush nested markup
-  $flush = $flush if $flush ne ""; # only add newline if there is flushed markup
   return $flush;
 }
 
