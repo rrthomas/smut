@@ -1,6 +1,6 @@
 #! /usr/bin/perl -Tw
 # smut-docbook (simply marked up text --> DocBook XML)
-# (c) 2002-2007 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 # FIXME: Need to generate <artheader> to make a valid article

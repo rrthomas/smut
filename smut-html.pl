@@ -1,6 +1,6 @@
 #! /usr/bin/perl -Tw
 # smut-html (simply marked up text --> HTML)
-# (c) 2002-2007 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 require 5.8.4;
