@@ -95,4 +95,10 @@ EOF
 # Render text
 my ($file, $page, $baseurl, $root) = @ARGV;
 binmode(STDOUT, ":utf8");
-print Smutx::smutx(scalar(slurp '<:utf8', $file), \%output, $page, $baseurl, $root);
+my ($text);
+if ($file eq "-") {
+  $text = slurp '<:crlf:utf8', \*STDIN;
+} else {
+  $text = slurp '<:crlf:utf8', $file || "";
+}
+print Smutx::smutx($text, \%output, $page, $baseurl, $root);
