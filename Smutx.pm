@@ -1,7 +1,8 @@
 #! /usr/bin/perl -Tw
 # smutx (simply marked up text --> something else)
 # (c) 2002-2007 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
-# Distributed under the GNU General Public License
+# Distributed under the GNU General Public License version 3, or (at
+# your option) any later version. There is no warranty.
 
 # FIXME: Common ending of all smut-foo.pl scripts should be put in a
 # function
