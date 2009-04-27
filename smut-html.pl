@@ -1,6 +1,6 @@
-#! /usr/bin/perl -Tw
+#! /usr/bin/perl -T
 # smut-html (simply marked up text --> HTML)
-# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2009 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 require 5.8.4;
@@ -12,22 +12,15 @@ use warnings;
 use Perl6::Slurp;
 use CGI qw(:standard unescapeHTML);
 use Encode;
+use Getopt::Long;
 
 use lib ".";
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page $ServerUrl $BaseUrl);
+use vars qw($Page $ServerUrl $BaseUrl $TopLevel);
 
-
-# FIXME: Why is this needed here and in Smutx.pm? (Otherwise images don't work)
-sub url {
-  my ($path) = @_;
-  $path = normalizePath($path, $Page);
-  $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
-  $path =~ s/\$/%24/;     # escape $ to avoid generating macros
-  return $BaseUrl . $path;
-}
+$TopLevel = 1; # Default h level for top-level heading
 
 my %output =
   (
@@ -39,13 +32,13 @@ my %output =
    typewriter => sub {"<tt>" . $_[0] . "</tt>"},
 
    sectlevel1 => sub {""},
-   sect1title => sub {"<h1>" . $_[0] . "</h1>"},
+   sect1title => sub {"<h$TopLevel>" . $_[0] . "</h$TopLevel>"},
    sectlevel2 => sub {""},
-   sect2title => sub {"<h2>" . $_[0] . "</h2>"},
+   sect2title => sub {"<h" . ($TopLevel + 1) . ">" . $_[0] . "</h" . ($TopLevel + 1) . ">"},
    sectlevel3 => sub {""},
-   sect3title => sub {"<h3>" . $_[0] . "</h3>"},
+   sect3title => sub {"<h" . ($TopLevel + 2) . ">" . $_[0] . "</h" . ($TopLevel + 2) . ">"},
    sectlevel4 => sub {""},
-   sect4title => sub {"<h4>" . $_[0] . "</h4>"},
+   sect4title => sub {"<h" . ($TopLevel + 3) . ">" . $_[0] . "</h" . ($TopLevel = 3) . ">"},
    leadingspace => sub {"&nbsp;" x $_[0]},
 
    descriptionlist => sub {"dl"},
@@ -107,6 +100,9 @@ EOF
   );
 
 # Render text
+my $opts = GetOptions(
+  "toplevel=i" => \$TopLevel,
+ );
 my ($file, $root);
 ($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
 $file = decode_utf8($file);
