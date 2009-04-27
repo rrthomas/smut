@@ -1,4 +1,4 @@
-#! /usr/bin/perl -Tw
+#! /usr/bin/perl -T
 # smut-latex (simply marked up text --> LaTeX)
 # (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
