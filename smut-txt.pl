@@ -1,6 +1,6 @@
-#! /usr/bin/perl -Tw
+#! /usr/bin/perl -T
 # smut-txt (simply marked up text --> plain text)
-# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2009 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 require 5.8.4;
@@ -18,16 +18,6 @@ use RRT::Misc;
 use Smutx;
 
 use vars qw($Page $ServerUrl $BaseUrl);
-
-
-# FIXME: Why is this needed here and in Smutx.pm? (Otherwise images don't work)
-sub url {
-  my ($path) = @_;
-  $path = normalizePath($path, $Page);
-  $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
-  $path =~ s/\$/%24/;     # escape $ to avoid generating macros
-  return $ServerUrl . $BaseUrl . $path;
-}
 
 my %output =
   (
