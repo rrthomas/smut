@@ -1,6 +1,6 @@
-#! /usr/bin/perl -Tw
-# smutx (simply marked up text --> something else)
-# (c) 2002-2007 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
+#! /usr/bin/perl -T
+# Smutx (simply marked up text --> something else)
+# (c) 2002-2009 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License version 3, or (at
 # your option) any later version. There is no warranty.
 
@@ -16,8 +16,17 @@ use warnings;
 
 use File::Basename;
 
-use lib ".";
 use RRT::Misc;
+
+BEGIN {
+  use Exporter ();
+  our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
+  $VERSION = 0.01;
+  @ISA = qw(Exporter);
+  @EXPORT = qw(&url);
+}
+our @EXPORT_OK;
+
 
 use vars qw($Root $Page $ServerUrl $BaseUrl $Output);
 
