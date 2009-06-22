@@ -110,7 +110,7 @@ my ($text);
 if ($file eq "-") {
   $text = slurp '<:crlf:utf8', \*STDIN;
 } else {
-  $text = slurp '<:crlf:utf8', $file || "";
+  $text = (slurp '<:crlf:utf8', $file) || "";
 }
 $Page = decode_utf8($Page);
 binmode(STDOUT, ":utf8");

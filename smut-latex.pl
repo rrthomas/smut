@@ -1,6 +1,6 @@
 #! /usr/bin/perl -T
 # smut-latex (simply marked up text --> LaTeX)
-# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2009 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 require 5.8.4;
@@ -93,12 +93,12 @@ EOF
   );
 
 # Render text
-my ($file, $page, $serverurl, $baseurl, $root) = @ARGV;
+my ($file, $page, $baseurl, $root) = @ARGV;
 binmode(STDOUT, ":utf8");
 my ($text);
 if ($file eq "-") {
   $text = slurp '<:crlf:utf8', \*STDIN;
 } else {
-  $text = slurp '<:crlf:utf8', $file || "";
+  $text = (slurp '<:crlf:utf8', $file) || "";
 }
-print Smutx::smutx($text, \%output, $page, $serverurl, $baseurl, $root);
+print Smutx::smutx($text, \%output, $page, $baseurl, $root);
