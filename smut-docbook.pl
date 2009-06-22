@@ -1,6 +1,6 @@
 #! /usr/bin/perl -T
 # smut-docbook (simply marked up text --> DocBook XML)
-# (c) 2002-2008 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
+# (c) 2002-2009 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
 
 # FIXME: Need to generate <artheader> to make a valid article
@@ -91,16 +91,13 @@ EOF
   );
 
 # Render text
-my ($file, $page, $serverurl, $baseurl, $root) = @ARGV;
+my ($file, $page, $baseurl, $root) = @ARGV;
 $file = decode_utf8($file);
-$page = decode_utf8($page);
-$baseurl = decode_utf8($baseurl);
-$root = decode_utf8($root);
-binmode(STDOUT, ":utf8");
 my ($text);
 if ($file eq "-") {
   $text = slurp '<:crlf:utf8', \*STDIN;
 } else {
   $text = slurp '<:crlf:utf8', $file || "";
 }
-print Smutx::smutx($text, \%output, $page, $serverurl, $baseurl, $root);
+binmode(STDOUT, ":utf8");
+print Smutx::smutx($text, \%output, decode_utf8($page), decode_utf8($baseurl), decode_utf8($root));

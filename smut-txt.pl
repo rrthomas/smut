@@ -17,8 +17,6 @@ use lib ".";
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page $ServerUrl $BaseUrl);
-
 my %output =
   (
    emphasis => sub {"_" . $_[0] . "_"},
@@ -79,8 +77,7 @@ my %output =
   );
 
 # Render text
-my ($file, $root);
-($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
+my ($file, $page, $baseurl, $root) = @ARGV;
 $file = decode_utf8($file);
 my ($text);
 if ($file eq "-") {
@@ -88,8 +85,5 @@ if ($file eq "-") {
 } else {
   $text = slurp '<:crlf:utf8', $file || "";
 }
-$Page = decode_utf8($Page);
-$BaseUrl = decode_utf8($BaseUrl);
-$root = decode_utf8($root);
 binmode(STDOUT, ":utf8");
-print Smutx::smutx($text, \%output, $Page, $ServerUrl, $BaseUrl, $root);
+print Smutx::smutx($text, \%output, decode_utf8($page), decode_utf8($baseurl), decode_utf8($root));

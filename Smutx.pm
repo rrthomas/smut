@@ -28,7 +28,7 @@ BEGIN {
 our @EXPORT_OK;
 
 
-use vars qw($Root $Page $ServerUrl $BaseUrl $Output);
+use vars qw($Root $Page $BaseUrl $Output);
 
 
 # Rendering
@@ -136,7 +136,7 @@ sub render {
 
 sub smutx {
   my $text;
-  ($text, $Output, $Page, $ServerUrl, $BaseUrl, $Root) = @_;
+  ($text, $Output, $Page, $BaseUrl, $Root) = @_;
   chomp $text;
   return $$Output{preamble}() . render($text) . $$Output{postamble}();
 }

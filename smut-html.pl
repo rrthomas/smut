@@ -18,7 +18,7 @@ use lib ".";
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page $ServerUrl $BaseUrl $TopLevel);
+use vars qw($Page $TopLevel);
 
 $TopLevel = 1; # Default h level for top-level heading
 
@@ -103,8 +103,8 @@ EOF
 my $opts = GetOptions(
   "toplevel=i" => \$TopLevel,
  );
-my ($file, $root);
-($file, $Page, $ServerUrl, $BaseUrl, $root) = @ARGV;
+my ($file, $root, $baseurl);
+($file, $Page, $baseurl, $root) = @ARGV;
 $file = decode_utf8($file);
 my ($text);
 if ($file eq "-") {
@@ -113,7 +113,5 @@ if ($file eq "-") {
   $text = slurp '<:crlf:utf8', $file || "";
 }
 $Page = decode_utf8($Page);
-$BaseUrl = decode_utf8($BaseUrl);
-$root = decode_utf8($root);
 binmode(STDOUT, ":utf8");
-print Smutx::smutx($text, \%output, $Page, $ServerUrl, $BaseUrl, $root);
+print Smutx::smutx($text, \%output, $Page, decode_utf8($baseurl), decode_utf8($root));
