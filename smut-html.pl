@@ -1,4 +1,4 @@
-#! /usr/bin/perl -T
+#! /usr/bin/perl
 # smut-html (simply marked up text --> HTML)
 # (c) 2002-2009 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
@@ -13,7 +13,6 @@ use Perl6::Slurp;
 use CGI qw(:standard unescapeHTML);
 use Encode;
 
-use lib ".";
 use RRT::Misc;
 use Smutx;
 
