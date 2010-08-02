@@ -12,15 +12,12 @@ use warnings;
 use Perl6::Slurp;
 use CGI qw(:standard unescapeHTML);
 use Encode;
-use Getopt::Long;
 
 use lib ".";
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page $TopLevel);
-
-$TopLevel = 1; # Default h level for top-level heading
+use vars qw($Page);
 
 my %output =
   (
@@ -32,13 +29,13 @@ my %output =
    typewriter => sub {"<tt>" . $_[0] . "</tt>"},
 
    sectlevel1 => sub {""},
-   sect1title => sub {"<h$TopLevel>" . $_[0] . "</h$TopLevel>"},
+   sect1title => sub {h1($_[0])},
    sectlevel2 => sub {""},
-   sect2title => sub {"<h" . ($TopLevel + 1) . ">" . $_[0] . "</h" . ($TopLevel + 1) . ">"},
+   sect2title => sub {h2($_[0])},
    sectlevel3 => sub {""},
-   sect3title => sub {"<h" . ($TopLevel + 2) . ">" . $_[0] . "</h" . ($TopLevel + 2) . ">"},
+   sect3title => sub {h3($_[0])},
    sectlevel4 => sub {""},
-   sect4title => sub {"<h" . ($TopLevel + 3) . ">" . $_[0] . "</h" . ($TopLevel = 3) . ">"},
+   sect4title => sub {h4($_[0])},
    leadingspace => sub {"&nbsp;" x $_[0]},
 
    descriptionlist => sub {"dl"},
@@ -62,7 +59,7 @@ my %output =
      return <<"EOF";
 <?xml version='1.0'?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>$Page</title>
 </head>
@@ -100,9 +97,6 @@ EOF
   );
 
 # Render text
-my $opts = GetOptions(
-  "toplevel=i" => \$TopLevel,
- );
 my ($file, $root, $baseurl);
 ($file, $Page, $baseurl, $root) = @ARGV;
 $file = decode_utf8($file);
