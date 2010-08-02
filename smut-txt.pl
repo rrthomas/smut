@@ -32,7 +32,7 @@ my %output =
    sect3title => sub {"\n \n" . $_[0] . "\n" . ("-" x length $_[0]) . " \n "},
    sectlevel4 => sub {""},
    sect4title => sub {"\n \n" . $_[0] . " \n "},
-   leadingspace => sub {" " x $_[0]},
+   leadingspace => sub {" " x length $_[0]},
 
    descriptionlist => sub {""},
    opendescriptionlistitem => sub {""},
