@@ -1,4 +1,4 @@
-#! /usr/bin/perl -T
+#! /usr/bin/perl
 # smut-latex (simply marked up text --> LaTeX)
 # (c) 2002-2009 Reuben Thomas (rrt@sc3d.org,  http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License
@@ -10,7 +10,6 @@ use warnings;
 
 use Perl6::Slurp;
 
-use lib ".";
 use Smutx;
 
 
