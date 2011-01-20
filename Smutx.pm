@@ -1,6 +1,6 @@
 #! /usr/bin/perl -T
 # Smutx (simply marked up text --> something else)
-# (c) 2002-2009 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
+# (c) 2002-2011 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License version 3, or (at
 # your option) any later version. There is no warranty.
 
@@ -111,8 +111,8 @@ sub render {
       s/(?<!\p{IsAlnum})\*(?=\S)(.*?)\*(?!\p{IsAlnum})/$$Output{bold}($1)/ge; # strong
       s/(?<!\p{IsAlnum})@(?=\S)(.*?)@(?!\p{IsAlnum})/$$Output{typewriter}($1)/ge; # typewriter
       s/\[([^]]+\.(?:(?i)gif|jpg|jpeg|png|bmp))(?:\|(.*?))?\]/$$Output{image}($1, $2)/ge; # image
-      s/(^|\s)((?:http|ftp|mailto):[\S]+[^\s\.,!\?;:])/$1 . $$Output{hyperlink}($2)/ge; # bare URL
-      s/\[((?:http|ftp|mailto):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
+      s/(^|\s)((?:http|https|ftp|mailto):[\S]+[^\s\.,!\?;:])/$1 . $$Output{hyperlink}($2)/ge; # bare URL
+      s/\[((?:http|https|ftp|mailto):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
       s/\[(.*?)(?:\|(.*?))?\]/$$Output{hyperlink}(url($1), $2 ? $2 : $1)/ge; # internal link
       # FIXME: In next line, don't assume HTML escapes
       s/^((?:   )+)\&lt;(.+?)\&gt;// && ($result .= addItem(\@list, 1, $$Output{descriptionlist}(), $$Output{opendescriptionlistitem}(), $$Output{closedescriptionlistitem}(), (length $1) / 3, $$Output{describeditem}($2))) or # description list
