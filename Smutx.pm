@@ -1,6 +1,6 @@
 #! /usr/bin/perl -T
 # Smutx (simply marked up text --> something else)
-# (c) 2002-2011 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
+# (c) 2002-2015 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License version 3, or (at
 # your option) any later version. There is no warranty.
 
@@ -35,7 +35,7 @@ use vars qw($Root $Page $BaseUrl $Output);
 
 sub url {
   my ($path) = @_;
-  $path = normalizePath($path, $Page);
+  $path = normalizePath($path, $Page, $Root);
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
   $path =~ s/\$/%24/;     # escape $ to avoid generating macros
   return $BaseUrl . $path;
