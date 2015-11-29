@@ -110,7 +110,7 @@ sub render {
       s/(?<!\p{IsAlnum})_(?=\S)(.*?)_(?!\p{IsAlnum})/$$Output{emphasis}($1)/ge; # emphasis
       s/(?<!\p{IsAlnum})\*(?=\S)(.*?)\*(?!\p{IsAlnum})/$$Output{bold}($1)/ge; # strong
       s/(?<!\p{IsAlnum})@(?=\S)(.*?)@(?!\p{IsAlnum})/$$Output{typewriter}($1)/ge; # typewriter
-      s/\[([^]]+\.(?:(?i)gif|jpg|jpeg|png|bmp))(?:\|(.*?))?\]/$$Output{image}($1, $2)/ge; # image
+      s/\[([^]]+\.(?:(?i)gif|jpg|jpeg|png|bmp|svg))(?:\|(.*?))?\]/$$Output{image}($1, $2)/ge; # image
       s/(^|\s)((?:http|https|ftp|mailto):[\S]+[^\s\.,!\?;:])/$1 . $$Output{hyperlink}($2)/ge; # bare URL
       s/\[((?:http|https|ftp|mailto):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
       s/\[(.*?)(?:\|(.*?))?\]/$$Output{hyperlink}(url($1), $2 ? $2 : $1)/ge; # internal link
