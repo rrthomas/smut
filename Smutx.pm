@@ -16,8 +16,6 @@ use warnings;
 
 use File::Basename;
 
-use RRT::Misc;
-
 BEGIN {
   use Exporter ();
   our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
@@ -35,7 +33,6 @@ use vars qw($Root $Page $BaseUrl $Output);
 
 sub url {
   my ($path) = @_;
-  $path = normalizePath($path, $Page, $Root);
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
   $path =~ s/\$/%24/;     # escape $ to avoid generating macros
   return $BaseUrl . $path;
