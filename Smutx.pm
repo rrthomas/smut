@@ -31,11 +31,15 @@ use vars qw($Root $Page $BaseUrl $Output);
 
 # Rendering
 
+# FIXME: unify with DarkGlass's url macro
 sub url {
   my ($path) = @_;
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
   $path =~ s/\$/%24/;     # escape $ to avoid generating macros
-  return $BaseUrl . $path;
+  $path = "$Page/$path" if $path !~ m|^/|;
+  $path = $BaseUrl . $path;
+  $path =~ s|//+|/|;      # compress /'s; mostly cosmetic, & avoid leading // in output
+  return $path;
 }
 
 # Process nested objects
