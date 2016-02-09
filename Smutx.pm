@@ -104,6 +104,7 @@ sub render {
   my $oldInPara = 0;
   foreach (split /\n/, $text, -1) { # limit of -1 gives us trailing empty fields
     $inPara = 0;                # assume the line is a block element
+    my $line_prefix = "";
     if (/^$/) {                 # paragraph
       $result .= flushNest(\@list);
     } else {
@@ -115,16 +116,16 @@ sub render {
       s/\[((?:http|https|ftp|mailto):[^\s|]+[^\s\.,!\?;:|])(?:\|(.*?))?\]/$$Output{hyperlink}($1, $2)/ge; # external URL
       s/\[(.*?)(?:\|(.*?))?\]/$$Output{hyperlink}(url($1), $2 ? $2 : $1)/ge; # internal link
       # FIXME: In next line, don't assume HTML escapes
-      s/^((?:   )+)\&lt;(.+?)\&gt;// && ($result .= addItem(\@list, 1, $$Output{descriptionlist}(), $$Output{opendescriptionlistitem}(), $$Output{closedescriptionlistitem}(), (length $1) / 3, $$Output{describeditem}($2))) or # description list
-        s/^((?:   )+)\* // && ($result .= addItem(\@list, 1, $$Output{itemizedlist}(), $$Output{openitemizedlistitem}(), $$Output{closeitemizedlistitem}(), (length $1) / 3)) or # bulleted list
-          s/^((?:   )+)\pN+ // && ($result .= addItem(\@list, 1, $$Output{orderedlist}(), $$Output{openorderedlistitem}(), $$Output{closeorderedlistitem}(), (length $1) / 3)) or # numbered list
+      s/^((?:   )+)\&lt;(.+?)\&gt;// && ($line_prefix = addItem(\@list, 1, $$Output{descriptionlist}(), $$Output{opendescriptionlistitem}(), $$Output{closedescriptionlistitem}(), (length $1) / 3, $$Output{describeditem}($2))) or # description list
+        s/^((?:   )+)\* // && ($line_prefix = addItem(\@list, 1, $$Output{itemizedlist}(), $$Output{openitemizedlistitem}(), $$Output{closeitemizedlistitem}(), (length $1) / 3)) or # bulleted list
+          s/^((?:   )+)\pN+ // && ($line_prefix = addItem(\@list, 1, $$Output{orderedlist}(), $$Output{openorderedlistitem}(), $$Output{closeorderedlistitem}(), (length $1) / 3)) or # numbered list
             $$Output{notinpara}($_) or # titles and headings are not in paragraphs
               $inPara = 1;
     }
     $result .= $$Output{openpara}() if $inPara == 1 && $oldInPara == 0;
     $result .= $$Output{linebreak}() if $inPara == 1 && $oldInPara == 1;
-    $result .= "\n$_";
     $result .= $$Output{closepara}() if $inPara == 0 && $oldInPara == 1;
+    $result .= "\n$line_prefix$_";
     $oldInPara = $inPara;
   }
   $result .= flushNest(\@list);
