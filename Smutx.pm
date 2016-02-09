@@ -1,4 +1,3 @@
-#! /usr/bin/perl -T
 # Smutx (simply marked up text --> something else)
 # (c) 2002-2015 Reuben Thomas (rrt@sc3d.org, http://rrt.sc3d.org/)
 # Distributed under the GNU General Public License version 3, or (at
