@@ -25,7 +25,7 @@ BEGIN {
 our @EXPORT_OK;
 
 
-use vars qw($Root $Page $BaseUrl $Output);
+use vars qw($Root $File $BaseUrl $Output);
 
 
 # Rendering
@@ -35,7 +35,9 @@ sub url {
   my ($path) = @_;
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
   $path =~ s/\$/%24/;     # escape $ to avoid generating macros
-  $path = "$Page/$path" if $path !~ m|^/|;
+  my $file_path = $File;
+  $file_path =~ s/^$Root//e;
+  $path = dirname($file_path) . "/$path" if $path !~ m|^/|;
   $path = $BaseUrl . $path;
   $path =~ s|//+|/|;      # compress /'s; mostly cosmetic, & avoid leading // in output
   return $path;
@@ -137,7 +139,7 @@ sub render {
 
 sub smutx {
   my $text;
-  ($text, $Output, $Page, $BaseUrl, $Root) = @_;
+  ($text, $Output, $File, $BaseUrl, $Root) = @_;
   chomp $text;
   return $$Output{preamble}() . render($text) . $$Output{postamble}();
 }

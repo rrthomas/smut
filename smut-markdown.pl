@@ -87,4 +87,4 @@ if ($file eq "-") {
   $text = (slurp '<:crlf:utf8', $file) || "";
 }
 binmode(STDOUT, ":utf8");
-print Smutx::smutx($text, \%output, decode_utf8($page), decode_utf8($baseurl), decode_utf8($root));
+print Smutx::smutx($text, \%output, $file, decode_utf8($baseurl), decode_utf8($root));

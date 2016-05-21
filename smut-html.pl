@@ -16,7 +16,7 @@ use Encode;
 use RRT::Misc;
 use Smutx;
 
-use vars qw($Page);
+use vars qw($Page $File);
 
 my %output =
   (
@@ -87,7 +87,8 @@ EOF
    # Escape characters that need it and process \ source escapes
    escape => sub {
      my ($text) = @_;
-     $text =~ s/\\(.)/"&#" . (ord $1) . ";"/ge; # \ escapes the next character
+     # FIXME: Re-enable this; currently it messes up macro escaping
+     #$text =~ s/\\(.)/"&#" . (ord $1) . ";"/ge; # \ escapes the next character
      $text =~ s/&(?!#?[\pN\pL_]+;)/&amp;/g; # escape ampersands (but not in entities)
      $text =~ s/</&lt\;/g;      # escape <
      $text =~ s/>/&gt\;/g;      # escape >
@@ -96,15 +97,15 @@ EOF
   );
 
 # Render text
-my ($file, $root, $baseurl);
-($file, $Page, $baseurl, $root) = @ARGV;
-$file = decode_utf8($file);
+my ($root, $baseurl);
+($File, $Page, $baseurl, $root) = @ARGV;
+$File = decode_utf8($File);
 my ($text);
-if ($file eq "-") {
+if ($File eq "-") {
   $text = slurp '<:crlf:utf8', \*STDIN;
 } else {
-  $text = (slurp '<:crlf:utf8', $file) || "";
+  $text = (slurp '<:crlf:utf8', $File) || "";
 }
 $Page = decode_utf8($Page);
 binmode(STDOUT, ":utf8");
-print Smutx::smutx($text, \%output, $Page, decode_utf8($baseurl), decode_utf8($root));
+print Smutx::smutx($text, \%output, $File, decode_utf8($baseurl), decode_utf8($root));
