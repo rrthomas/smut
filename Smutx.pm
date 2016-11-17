@@ -36,7 +36,7 @@ sub url {
   $path =~ s/\?/%3F/;     # escape ? to avoid generating parameters
   $path =~ s/\$/%24/;     # escape $ to avoid generating macros
   my $file_path = $File;
-  $file_path =~ s/^$Root//e;
+  $file_path =~ s/^$Root//;
   $path = dirname($file_path) . "/$path" if $path !~ m|^/|;
   $path = $BaseUrl . $path;
   $path =~ s|//+|/|;      # compress /'s; mostly cosmetic, & avoid leading // in output
