@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+# smutgallery
+# Make a or update directory of JPEGs into a Smut gallery
+# (c) Reuben Thomas
+# sh version 25/6, 12/7, 23,26/9, 26/10/05, 27/2, 10,13,30/8/06
+# Perl version 22,23/7/07, 20/9/08, 23/3/09, 29/4/09, 30/6/12, 25/1/13, 1/1/17
+
+use warnings;
+use strict;
+
+use File::Basename;
+use Getopt::Long;
+use File::stat;
+
+# Get arguments
+my ($nocomment_flag);
+my $prog = basename($0);
+my $opts = GetOptions(
+  "nocomment" => \$nocomment_flag,
+ );
+
+if ($#ARGV >= 0) {
+  foreach my $dir (@ARGV) {
+    $dir =~ s|/$||;
+    my $page = "$dir/README";
+    my $stat = stat($page);
+    my $epoch = $stat ? stat($page)->mtime : 0;
+
+    my $exists = -e $page;
+    open FILE, ">>$page";
+    print FILE "$dir\n###\n\n" if !$exists;
+
+    my @files = split /\0/, `find "$dir/" -maxdepth 1 -name "*.jpg" -perm -o=r -print0`;
+    foreach my $i (sort @files) {
+      if (stat($i)->mtime > $epoch) {
+        my $name = basename($i);
+        print FILE "\$image{$name}";
+        print FILE " \$imagecomment{$name}" unless $nocomment_flag;
+        print FILE "\n";
+      }
+    }
+    system "chmod o+r \"$dir\"/*";
+    system "chmod o+rx \"$dir\"";
+  }
+} else {
+  die "Usage: $prog [-nocomment] DIRECTORY...\n"
+}
